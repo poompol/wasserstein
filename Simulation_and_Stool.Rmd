@@ -1,6 +1,6 @@
 ---
 title: "6730 Project"
-author: "Cam Hogan, Poompol Bathong, Minjie Jia, Joia Zhang"
+author: "Cam Hogan, Poompol Buathong, Minjie Jia, Joia Zhang"
 date: "Spring 2024"
 output: pdf_document
 ---
