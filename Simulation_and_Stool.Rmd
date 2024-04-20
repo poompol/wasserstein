@@ -1,0 +1,64 @@
+---
+title: "6730 Project"
+author: "Cam Hogan, Poompol Bathong, Minjie Jia, Joia Zhang"
+date: "Spring 2024"
+output: pdf_document
+---
+
+```{r}
+library(transport)
+library(otinference)
+library(LaplacesDemon) # for rdirichlet()
+```
+
+Documentation for transport: https://cran.r-project.org/web/packages/transport/transport.pdf
+
+# Speed of convergence
+
+Here, we aim to reproduce the paper's results on the speed of convergence to the limiting distribution in Theorem 1 in the on sample case under the null by evaluating simulated data.
+
+```{r}
+# generate ground space X, an LxL grid with euclidean distance as metric
+# TODO: make for loop for L = 3, 5, 10
+L = 3
+X = matrix(rep(NA, L^2), nrow=L, ncol=L)
+
+# generate five random measures r on X as realizations of a Dirichlet RV with concentration parameter alpha = (alpha, ..., alpha) \in R^{LxL}
+# TODO: make for loop for alpha = 1, 5, 10
+a = 1
+alpha = rep(a, L)
+rs = rdirichlet(n=5, alpha=alpha)
+
+# for each measure r, generate 20,000 realizations of n^{1/(2p)}W_p(rhat_n, r) with n*rhat_n ~ Multinom(r) for n = 10, 1000, 1000 and of the limiting distribution in Thm 1
+# TODO: make for loop for n = 10, 1000, 1000
+
+n = 10
+p = 1 # TODO: what should p>=1 be?
+for (i in 1:5) { # for each measure r
+  r = rs[i, ]
+  # generate 20,000 realizations of n^{1/(2p)}W_p(rhat_n, r)
+  nrhat_n = rmultinom(n=20000, size=n, pro=r) # TODO: check this
+  rhat_n = nrhat_n / n
+  rhat_n = c(0.1, 0.2, 0.3)
+  W_p = wasserstein(a=rhat_n, b=r, p=1) # TODO: what should costm be? (argument for the matrix of costs between the support points of the measures)
+  realizations = n^(1/(2*p))*W_p
+}
+
+# plot Kolmogorov-Smirnov distance between samples
+
+# plot qq plots
+
+# plot sample and limiting distribution densities
+```
+
+# Metagenomics
+
+```{r}
+# load and process data
+
+# reproduce plot
+```
+
+
+
+
